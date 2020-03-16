@@ -28,7 +28,7 @@ public class ClimateDataResource {
   @Path("dates/{date}")
   public Response getClimateData(@PathParam("date") @CustomDate String date) {
     return Response
-        .ok(climateDataStore.getClimateData(date.toString()))
+        .ok(climateDataStore.getClimateData(date))
         .build();
   }
 }

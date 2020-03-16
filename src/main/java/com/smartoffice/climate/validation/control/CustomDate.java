@@ -9,7 +9,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static com.smartoffice.climate.validation.control.CustomDateValidator.DATE_FORMAT;
+import static com.smartoffice.climate.validation.control.CustomDateValidator.REQUIRED_DATE_FORMAT;
 
 /**
  * @author michael_loibl
@@ -23,7 +23,7 @@ import static com.smartoffice.climate.validation.control.CustomDateValidator.DAT
 @Documented
 public @interface CustomDate {
 
-  String message() default "date format must be: " + DATE_FORMAT;
+  String message() default "date format must be: " + REQUIRED_DATE_FORMAT;
 
   Class<?>[] groups() default {};
 

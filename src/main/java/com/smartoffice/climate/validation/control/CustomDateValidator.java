@@ -13,11 +13,11 @@ import java.time.format.DateTimeParseException;
 @ApplicationScoped
 public class CustomDateValidator implements ConstraintValidator<CustomDate, String> {
 
-  public final static String DATE_FORMAT = "yyyy-MM-dd";
+  public final static String REQUIRED_DATE_FORMAT = "yyyy-MM-dd";
 
   @Override
   public void initialize(final CustomDate pCustomDate) {
-    // initialization not necessary
+    // no init. necessary
   }
 
   @Override
@@ -41,12 +41,8 @@ public class CustomDateValidator implements ConstraintValidator<CustomDate, Stri
     return true;
   }
 
-  /**
-   * Removes the default validation error message and builds a custom validation message.
-   */
   private void addCustomValidationMessage(ConstraintValidatorContext context) {
-    String validatedParameterName = context.getDefaultConstraintMessageTemplate();
-    context.buildConstraintViolationWithTemplate("date format must be " + DATE_FORMAT)
+    context.buildConstraintViolationWithTemplate("date format must be " + REQUIRED_DATE_FORMAT)
         .addConstraintViolation()
         .disableDefaultConstraintViolation();
   }
