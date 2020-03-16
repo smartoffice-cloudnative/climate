@@ -1,7 +1,15 @@
 
 # Climate Microservice
 
-## How to Start in Debug-Mode
+## LOCAL.env Settings
+
+    content follows...
+
+## Makefile
+
+Enter ```make help``` to show the available make-usage-options.
+
+## How to Start Microservice in Debug-Mode
 
 In development mode, Quarkus starts by default with debug mode enabled, listening to port 5005 without suspending the JVM.
 

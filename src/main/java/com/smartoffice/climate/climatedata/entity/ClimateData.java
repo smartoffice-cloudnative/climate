@@ -1,11 +1,14 @@
 package com.smartoffice.climate.climatedata.entity;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 import java.util.Objects;
 
 /**
  * @author michael_loibl
  * @since 16.03.20
  */
+@RegisterForReflection
 public class ClimateData {
 
   private String date;
