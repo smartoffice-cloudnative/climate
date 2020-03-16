@@ -1,6 +1,5 @@
 package com.smartoffice.climate.validation.control;
 
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.Documented;
@@ -15,7 +14,6 @@ import static com.smartoffice.climate.validation.control.CustomDateValidator.REQ
  * @author michael_loibl
  * @since 16.03.20
  *
- * Bean validation annotation that specifies the custom date format.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
