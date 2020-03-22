@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      java: openjdk-8
+      java: openjdk8
   pre_build:
     commands:
       - git clone https://github.com/smartoffice-cloudnative/climate.git
