@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: openjdk8
+  pre_build:
+    commands:
+      - echo HELLO_ROBOT
+      - git clone https://github.com/smartoffice-cloudnative/climate.git
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn clean install
+  post_build:
+    commands:
+      - echo Build completed on `date`
+#artifacts:
+#  files:
+#    - target/messageUtil-1.0.jar
