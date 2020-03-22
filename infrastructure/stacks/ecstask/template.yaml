@@ -67,8 +67,7 @@ Resources:
       SecurityGroupEgress:
         - Egress
       SecurityGroupIngress:
-        - CidrIp: "0.0.0.0"
-          Description: "Inbound Rule for tcp on port 8080 for ipv4"
+        - Description: "Inbound Rule for tcp on port 8080 for ipv4"
           FromPort: 8080
           ToPort: 8080
           IpProtocol: tcp
