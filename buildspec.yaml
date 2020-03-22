@@ -6,6 +6,10 @@ phases:
       java: openjdk8
   pre_build:
     commands:
+      - echo source= $CODEBUILD_SOURCE_VERSION
+      - echo $BRANCH
+      - echo $MICROSERVICE
+      - echo $STAGE
       - git clone https://github.com/smartoffice-cloudnative/climate.git
   build:
     commands:
