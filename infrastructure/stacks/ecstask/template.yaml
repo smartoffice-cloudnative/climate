@@ -71,7 +71,6 @@ Resources:
           IpProtocol: tcp
           SourceSecurityGroupId:
             Fn::ImportValue: !Sub "${ElbStack}:AlbSGId"
-
       Tags:
         - Key: Name
           Value: !Sub "${MicroserviceName}-ecsService-sg"
