@@ -73,13 +73,6 @@ Resources:
           IpProtocol: tcp
           SourceSecurityGroupId:
             Fn::ImportValue: !Sub "${ElbStack}:AlbSGId"
-        - CidrIp: "::/0"
-          Description: "Inbound Rule for tcp on port 8080 for ipv6"
-          FromPort: 8080
-          ToPort: 8080
-          IpProtocol: tcp
-          SourceSecurityGroupId:
-            Fn::ImportValue: !Sub "${ElbStack}:AlbSGId"
 
       Tags:
         - Key: Name
