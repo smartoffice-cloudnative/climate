@@ -30,7 +30,7 @@ Resources:
       ProvisionedThroughput: 
         ReadCapacityUnits: !Sub "${ddbReadCapUnits}"
         WriteCapacityUnits: !Sub "${ddbWriteCapUnits}"
-      TableName: !Sub "${MicroserviceName}-${AWS::StackName}-table"
+      TableName: !Sub "${microserviceName}-${AWS::StackName}-table"
 
 Outputs:
   DDBTableArnOutput:
