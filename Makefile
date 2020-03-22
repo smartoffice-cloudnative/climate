@@ -1,6 +1,4 @@
 SHELL = /bin/bash
-AWS_REGION ?= eu-central-1
-AWS_PROFILE ?= default
 
 .PHONY = startContainer _buildNativeImage _runNativeImage _localDevMode _mvnCleanInstall
 
@@ -8,7 +6,7 @@ help:
 	@echo "Usage: "
 	@echo -e "\n  Start a native-executable container:"
 	@echo "    make startContainer"
-	@echo -e "\n  Start on local DEV-MODE"
+	@echo -e "\n  Start on local dev-mode"
 	@echo "    make startDevMode"
 
 startContainer: _mvnCleanInstall _buildNativeImage _runNativeImage
@@ -23,7 +21,7 @@ _runNativeImage:
 	@docker run -i --rm -p 8080:8080 climate
 
 _localDevMode:
-	@echo "Start in local DEV-MODE"
+	@echo "Start in local dev-mode"
 	@mvn compile quarkus:dev
 
 _mvnCleanInstall:

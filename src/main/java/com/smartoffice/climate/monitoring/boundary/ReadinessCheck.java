@@ -30,7 +30,7 @@ public class ReadinessCheck implements HealthCheck {
   }
 
   private boolean doOtherReadinessChecks(){
-    //implement db-connectivity-check here...
+    //implement other checks here...
     return true;
   }
 }
