@@ -11,4 +11,4 @@ Resources:
   ECRRepository: 
     Type: AWS::ECR::Repository
     Properties: 
-      RepositoryName: !Sub "${MicroserviceName}-registry-${Stage}"
+      RepositoryName: !Sub "${MicroserviceName}-ecr-${Stage}"

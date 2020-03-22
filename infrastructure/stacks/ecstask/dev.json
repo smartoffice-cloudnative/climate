@@ -6,6 +6,7 @@
     "TaskCPU": "256",
     "ContainerPort": "8080",
     "VpcStack": "dev-vpc",
+    "ElbStack": "dev-elb",
     "ECSClusterStack": "dev-ecs-cluster"
   }
 }

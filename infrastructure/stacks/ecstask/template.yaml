@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Cloudformation-Stack for Microservices
+Description: Cloudformation-Stack for the climate-microservice
 
 Parameters:
   MicroserviceName:
@@ -10,26 +10,32 @@ Parameters:
     Type: String
   VpcStack:
     Type: String
+  ElbStack:
+    Type: String
   TaskMemory:
-    Type: String 
+    Type: String
   TaskCPU:
-    Type: String 
+    Type: String
   ContainerPort:
     Type: String
   ECSClusterStack:
     Type: String
-    
+
 Resources:
-  TaskRole:
+  EcsTaskExecutionRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: 2008-10-17
+        Version: 2012-10-17
         Statement:
           - Effect: Allow
             Principal:
-              Service: ecs-tasks.amazonaws.com
-            Action: 'sts:AssumeRole'
+              Service:
+                - ecs-tasks.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      RoleName: "smartoffice-ecsTaskExecutionRole"
+      Description: "smartoffice-ecsTaskExecutionRole"
       ManagedPolicyArns:
         - "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 
@@ -37,42 +43,77 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       NetworkMode: awsvpc
-      ExecutionRoleArn: !GetAtt TaskRole.Arn
-      TaskRoleArn: !GetAtt TaskRole.Arn
       RequiresCompatibilities:
         - FARGATE
-      Cpu: !Ref TaskCPU
+      ExecutionRoleArn: !GetAtt EcsTaskExecutionRole.Arn
       Memory: !Ref TaskMemory
+      Cpu: !Ref TaskCPU
       ContainerDefinitions:
-        - Name: !Ref MicroserviceName
-          Image: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${MicroserviceName}-ecr:latest"
+        - Name: !Sub "${MicroserviceName}-container"
+          Image: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${MicroserviceName}-ecr-dev:latest"
           Cpu: !Ref TaskCPU
           Memory: !Ref TaskMemory
           PortMappings:
             - ContainerPort: !Ref ContainerPort
               HostPort: !Ref ContainerPort
+              Protocol: tcp
           Essential: true
+
+  ServiceSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub "${MicroserviceName}-ecsService-sg"
+      GroupDescription: !Sub "The SG for ${MicroserviceName}-ecsService"
+      SecurityGroupEgress:
+        - Egress
+      SecurityGroupIngress:
+        - CidrIp: "0.0.0.0"
+          Description: "Inbound Rule for tcp on port 8080 for ipv4"
+          FromPort: 8080
+          ToPort: 8080
+          IpProtocol: tcp
+          SourceSecurityGroupId:
+            Fn::ImportValue: !Sub "${ElbStack}:AlbSGId"
+        - CidrIp: "::/0"
+          Description: "Inbound Rule for tcp on port 8080 for ipv6"
+          FromPort: 8080
+          ToPort: 8080
+          IpProtocol: tcp
+          SourceSecurityGroupId:
+            Fn::ImportValue: !Sub "${ElbStack}:AlbSGId"
+
+      Tags:
+        - Key: Name
+          Value: !Sub "${MicroserviceName}-ecsService-sg"
+        - Key: Microservice
+          Value: !Sub "${MicroserviceName}"
+        - Key: Stage
+          Value: !Sub "${Stage}"
+      VpcId:
+        Fn::ImportValue: !Sub "${VpcStack}:VPC"
 
   Service:
     Type: AWS::ECS::Service
     Properties:
-      ServiceName: !Sub "${MicroserviceName}-${Stage}-service"
+      LaunchType: FARGATE
       TaskDefinition: !Ref TaskDefinition
-      Cluster: 
+      Cluster:
         Fn::ImportValue: !Sub '${ECSClusterStack}:ecsArn'
+      ServiceName: !Sub "${MicroserviceName}-${Stage}-service"
       DeploymentConfiguration:
         MinimumHealthyPercent: 100
         MaximumPercent: 200
       DesiredCount: 0
-      LaunchType: FARGATE
       NetworkConfiguration:
         AwsvpcConfiguration:
+          SecurityGroups:
+            - !Ref ServiceSG
           Subnets:
             - Fn::ImportValue: !Sub "${VpcStack}:PrivateSubnetA"
             - Fn::ImportValue: !Sub "${VpcStack}:PrivateSubnetB"
             - Fn::ImportValue: !Sub "${VpcStack}:PrivateSubnetC"
-
-
-
-
-
+      LoadBalancers:
+        - ContainerName: !Sub "${MicroserviceName}-container"
+          ContainerPort: !Ref ContainerPort
+          TargetGroupArn:
+            Fn::ImportValue: !Sub "${ElbStack}:TargetGroupARN"

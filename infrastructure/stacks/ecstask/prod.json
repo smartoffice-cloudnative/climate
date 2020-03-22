@@ -5,7 +5,8 @@
     "TaskMemory": "512",
     "TaskCPU": "256",
     "ContainerPort": "8080",
-    "VpcStack": "dev-vpc",
-    "ECSClusterStack": "dev-ecs-cluster"
+    "VpcStack": "prod-vpc",
+    "ElbStack": "prod-elb",
+    "ECSClusterStack": "prod-ecs-cluster"
   }
 }
