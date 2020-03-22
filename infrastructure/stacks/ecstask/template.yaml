@@ -64,8 +64,6 @@ Resources:
     Properties:
       GroupName: !Sub "${MicroserviceName}-ecsService-sg"
       GroupDescription: !Sub "The SG for ${MicroserviceName}-ecsService"
-      SecurityGroupEgress:
-        - Egress
       SecurityGroupIngress:
         - Description: "Inbound Rule for tcp on port 8080 for ipv4"
           FromPort: 8080
