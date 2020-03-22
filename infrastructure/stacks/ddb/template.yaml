@@ -8,6 +8,8 @@ Parameters:
     Type: String
   ddbWriteCapUnits:
     Type: String
+  Stage:
+    Type: String
 
 Resources: 
   ddbTable: 
