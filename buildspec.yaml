@@ -3,20 +3,17 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      docker: 18
-        - echo Logging in to Amazon ECR...
-        - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION
+      java: openjdk-8
   pre_build:
     commands:
-      - echo Logging in to Amazon ECR...
-      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION
+      - git clone https://github.com/smartoffice-cloudnative/climate.git
   build:
     commands:
       - echo Build started on `date`
-      - mvn install
+      - mvn clean install
   post_build:
     commands:
       - echo Build completed on `date`
-artifacts:
-  files:
-    - target/messageUtil-1.0.jar
+#artifacts:
+#  files:
+#    - target/messageUtil-1.0.jar
