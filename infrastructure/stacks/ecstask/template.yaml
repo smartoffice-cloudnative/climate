@@ -70,7 +70,7 @@ Resources:
           ToPort: 8080
           IpProtocol: tcp
           SourceSecurityGroupId:
-            Fn::ImportValue: !Sub "${ElbStack}:AlbSGId"
+            Fn::ImportValue: !Sub "${ElbStack}:Alb-SG-Id"
       Tags:
         - Key: Name
           Value: !Sub "${MicroserviceName}-ecsService-sg"
@@ -79,7 +79,7 @@ Resources:
         - Key: Stage
           Value: !Sub "${Stage}"
       VpcId:
-        Fn::ImportValue: !Sub "${VpcStack}:VPC"
+        Fn::ImportValue: !Sub "${VpcStack}:VPC-Id"
 
   Service:
     Type: AWS::ECS::Service
@@ -98,9 +98,9 @@ Resources:
           SecurityGroups:
             - !Ref ServiceSG
           Subnets:
-            - Fn::ImportValue: !Sub "${VpcStack}:PrivateSubnetA"
-            - Fn::ImportValue: !Sub "${VpcStack}:PrivateSubnetB"
-            - Fn::ImportValue: !Sub "${VpcStack}:PrivateSubnetC"
+            - Fn::ImportValue: !Sub "${VpcStack}:PrivateSubnetA-Id"
+            - Fn::ImportValue: !Sub "${VpcStack}:PrivateSubnetB-Id"
+            - Fn::ImportValue: !Sub "${VpcStack}:PrivateSubnetC-Id"
       LoadBalancers:
         - ContainerName: !Sub "${MicroserviceName}-container"
           ContainerPort: !Ref ContainerPort

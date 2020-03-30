@@ -2,7 +2,7 @@
   "Parameters": {
     "microserviceName": "climate",
     "Stage": "dev",
-    "ddbReadCapUnits": "5",
-    "ddbWriteCapUnits": "5"
+    "ddbReadCapUnits": "50",
+    "ddbWriteCapUnits": "50"
   }
 }
