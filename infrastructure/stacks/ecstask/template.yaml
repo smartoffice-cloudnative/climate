@@ -101,7 +101,6 @@ Resources:
     Type: AWS::ECS::Service
     Properties:
       LaunchType: FARGATE
-      Role: !Ref ServiceRole
       TaskDefinition: !Ref TaskDefinition
       Cluster:
         Fn::ImportValue: !Sub '${ECSClusterStack}:ecsArn'
