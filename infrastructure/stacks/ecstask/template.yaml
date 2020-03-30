@@ -81,10 +81,27 @@ Resources:
       VpcId:
         Fn::ImportValue: !Sub "${VpcStack}:VPC-Id"
 
+  ServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: "ClimateEcsServiceRole"
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs-tasks.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole'
+
   Service:
     Type: AWS::ECS::Service
     Properties:
       LaunchType: FARGATE
+      Role: !Ref ServiceRole
       TaskDefinition: !Ref TaskDefinition
       Cluster:
         Fn::ImportValue: !Sub '${ECSClusterStack}:ecsArn'
