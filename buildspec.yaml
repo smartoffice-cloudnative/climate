@@ -6,18 +6,19 @@ phases:
       java: openjdk8
   pre_build:
     commands:
-      - echo source= $CODEBUILD_SOURCE_VERSION
-      - echo $BRANCH
-      - echo $MICROSERVICE
-      - echo $STAGE
-      - git clone https://github.com/smartoffice-cloudnative/climate.git
+      - echo log-in into ecr in prod-stage
+      - aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 496106771575.dkr.ecr.eu-central-1.amazonaws.com/climate-ecr-dev
   build:
     commands:
-      - echo Build started on `date`
+      - echo ===============Build started on `date`===============
+      - echo build Project
       - mvn clean install
+      - echo build docker-image
+      - docker build -f src/main/docker/Dockerfile.jvm -t climate-jvm .
+      - echo tag docker-image
+      - docker tag climate-jvm:latest 496106771575.dkr.ecr.eu-central-1.amazonaws.com/climate-ecr-dev:latest
   post_build:
     commands:
-      - echo Build completed on `date`
-#artifacts:
-#  files:
-#    - target/messageUtil-1.0.jar
+      - echo ===============Build completed on `date`===============
+      - echo pushing the docker image to ecr
+      - docker push 496106771575.dkr.ecr.eu-central-1.amazonaws.com/climate-ecr-dev:latest
