@@ -1,0 +1,6 @@
+[
+  {
+    "name": "climate-container",
+    "imageUri": "496106771575.dkr.ecr.eu-central-1.amazonaws.com/climate-ecr-dev:latest"
+  }
+]
