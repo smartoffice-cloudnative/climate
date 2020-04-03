@@ -21,6 +21,6 @@ phases:
     commands:
       - echo pushing the docker image to ecr
       - docker push 496106771575.dkr.ecr.eu-central-1.amazonaws.com/climate-ecr-dev:latest
-      - printf '[{"name":"climate-container","imageUri":"496106771575.dkr.ecr.eu-central-1.amazonaws.com/climate-ecr-dev:latest"}]' > images.json
+      - printf '[{"name":"climate-container","imageUri":"496106771575.dkr.ecr.eu-central-1.amazonaws.com/climate-ecr-dev:latest"}]' > imagedefinitions.json
 artifacts:
-  files: images.json
+  files: imagedefinitions.json
