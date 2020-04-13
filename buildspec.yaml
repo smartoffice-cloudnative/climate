@@ -11,8 +11,12 @@ phases:
   build:
     commands:
       - echo ===============Build started on `date`===============
+      - echo =+=show current filesystem=+=
+      - ls -lah
       - echo build Project
       - mvn clean install
+      - echo =+=show current filesystem=+=
+      - ls -lah
       - echo build docker-image
       - #docker build -f src/main/docker/Dockerfile.jvm -t climate-jvm .
       - docker build -f TestDockerFile -t climate-jvm
