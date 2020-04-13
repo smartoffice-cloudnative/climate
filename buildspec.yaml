@@ -15,7 +15,7 @@ phases:
       - mvn clean install
       - echo build docker-image
       - #docker build -f src/main/docker/Dockerfile.jvm -t climate-jvm .
-      - docker build -f TestDockerFile -t httpd-testImg
+      - docker build -f TestDockerFile -t climate-jvm
       - echo tag docker-image
       - docker tag climate-jvm:latest 496106771575.dkr.ecr.eu-central-1.amazonaws.com/climate-ecr-dev:latest
   post_build:
