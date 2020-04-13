@@ -6,12 +6,18 @@ phases:
       java: openjdk8
   pre_build:
     commands:
-      - echo HELLO_ROBOT
+      - echo ==== START PREBUILD - CHECKOUT CODE ===
+      - mkdir checkedOutCode && cd checkedOutCode
       - git clone https://github.com/smartoffice-cloudnative/climate.git
+      - git checkout -f -b feature/proj-123-doSomething origin/feature/proj-123-doSomething
+      - =+=current location
+      - ls -lah
   build:
     commands:
       - echo Build started on `date`
       - mvn clean install
+      - =+=current location
+      - ls -lah
   post_build:
     commands:
       - echo Build completed on `date`
