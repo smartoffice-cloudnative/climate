@@ -122,3 +122,9 @@ Resources:
           ContainerPort: !Ref ContainerPort
           TargetGroupArn:
             Fn::ImportValue: !Sub "${ElbStack}:TargetGroupARN"
+Outputs:
+  ServiceNameOutput:
+    Description: The Name of the ECS-service
+    Value: !GetAtt Service.Name
+    Export:
+      Name: !Sub "${AWS::StackName}:serviceName"

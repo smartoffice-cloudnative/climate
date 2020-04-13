@@ -5,13 +5,11 @@ SHELL = /bin/bash
 help:
 	@echo "Usage: "
 	@echo -e "\n  Start a native-executable container:"
-	@echo "    make startContainer"
+	@echo "    make sc"
 	@echo -e "\n  Start on local dev-mode"
-	@echo "    make startDevMode"
-	@echo -e "\n  Start on local dev-mode"
-	@echo "    make startDevMode"
+	@echo "    make sdm"
 
-startDevMode: _localDevMode
+sdm	: _localDevMode
 
 deployNativeImageToEcr: _buildApplication _buildNativeImage _tagNativeImage _loginIntoEcr _pushImgToEcr
 deployJvmImageToEcr: _buildApplication _buildJvmImage _tagJvmImage _loginIntoEcr _pushImgToEcr
